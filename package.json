@@ -1,0 +1,28 @@
+{
+  "name": "tomsblog",
+  "version": "1.0.0",
+  "description": "my blog",
+  "main": "index.js",
+  "author": "Tom Hadlaw",
+  "license": "MIT",
+  "dependencies": {
+    "create-react-class": "^15.6.3",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-pdf": "^3.0.5",
+    "request": "^2.88.0",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack-dev-server": "^3.1.8"
+  },
+  "scripts": {
+    "start:dev": "webpack-dev-server",
+    "webpack": "webpack --config webpack.config.js"
+  }
+}
