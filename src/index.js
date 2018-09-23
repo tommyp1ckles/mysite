@@ -1,32 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CreateReactClass from 'create-react-class';
-
 import { Document, Page } from 'react-pdf/dist/entry.webpack';
 
-// TODO: Preload the pdf.
 // TODO: Fix alignment change after opening PDF.
-// TODO: Put the buffer code in its own npm module.
 
-var https = require('http');
-
-//const resume_url = 'https://s3-us-west-2.amazonaws.com/toms-web/resume_master.pdf';
-const resume_url = 'http://localhost:8080/static/resume_master.pdf'
-
+// preload contains all data that is preloaded at page load.
 let preload = {
   data: ''
 };
 
-https.get(resume_url, (resp) => {
-  resp.on('data', (chunk) => {
-    preload.data += chunk;
-    console.log(chunk);
-  });
-  resp.on('end', () => {
-    console.log("howdy=====>", preload.data.length);
-  });
-});
+var oReq = new XMLHttpRequest();
+const resume_uri = "/tomhadlaw.xyz/resume_master.pdf";
 
+oReq.open("GET", resume_uri, true);
+oReq.responseType = "arraybuffer";
+
+oReq.onload = function (oEvent) {
+  var arrayBuffer = oReq.response;
+  if (arrayBuffer) {
+    preload.data = new Uint8Array(arrayBuffer);
+    console.log("done loading '%s', length of content = '%d'", resume_uri, preload.data.length);
+  }
+};
+oReq.send(null);
+
+/**
+ * PDF displays a rendered PDF class.
+ */
 var PDF = CreateReactClass({
   state: {
     numPages: null,
@@ -38,15 +39,17 @@ var PDF = CreateReactClass({
   render: function() {
     return (
       <div>
-        <Document
-          file={preload}>
+        <Document loading="" file={preload}>
           <Page pageNumber={1} />
-        </Document> 
+        </Document>
       </div>
     );
   }
 });
 
+/**
+ * DisplayPicture displays a users profile image.
+ */
 var DisplayPicture = CreateReactClass({
   click: function() {
     console.log("click clack");
@@ -63,6 +66,10 @@ var DisplayPicture = CreateReactClass({
   }
 });
 
+/**
+ * SocialLink provides a simple icon based link to a social network
+ * or personal website.
+ */
 var SocialLink = CreateReactClass({
   getInitialState: function() {
     return {
@@ -79,13 +86,20 @@ var SocialLink = CreateReactClass({
   }
 });
 
+/**
+ * Root class for the profile.
+ */
 var Profile = CreateReactClass({
   getInitialState: function() {
     return { showResume: false };
   }, 
   toggleResume: function() {
-    console.log(this.state.showResume);
     this.setState({ showResume: !this.state.showResume });
+    if (this.state.showResume) {
+      console.log("Displaying resume");
+    } else {
+      console.log("Hiding resume");
+    }
   },
   render: function() {
     return (
@@ -110,7 +124,7 @@ var Profile = CreateReactClass({
         </div>
         <div className="pdf-body">
           { this.state.showResume && <PDF /> }
-          { this.state.showResume && <i onClick={this.toggleResume} class="far fa-times-circle resume-close"></i> }
+          { this.state.showResume && <i onClick={this.toggleResume} className="far fa-times-circle resume-close"></i> }
         </div>
       </div>
     );

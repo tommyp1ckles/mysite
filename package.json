@@ -6,13 +6,18 @@
   "author": "Tom Hadlaw",
   "license": "MIT",
   "dependencies": {
+    "browser-request": "^0.3.3",
     "create-react-class": "^15.6.3",
+    "iconv-lite": "^0.4.24",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-pdf": "^3.0.5",
-    "request": "^2.88.0",
+    "requests": "^0.2.2",
+    "tls": "^0.0.1",
     "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack-node-externals": "^1.7.2",
+    "webpack-require-http": "^0.4.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

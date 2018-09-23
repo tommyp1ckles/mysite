@@ -8,6 +8,7 @@ module.exports = {
         //"filename": "[name].[chunkhash:8].js"
         "filename": "bundle.js"
     },
+    "target": "web",
     "module": {
         "rules": [
             {
