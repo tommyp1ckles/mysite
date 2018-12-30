@@ -17,6 +17,7 @@ oReq.open("GET", resume_uri, true);
 oReq.responseType = "arraybuffer";
 
 oReq.onload = function (oEvent) {
+  document.title = "Toms Personal Website";
   var arrayBuffer = oReq.response;
   if (arrayBuffer) {
     preload.data = new Uint8Array(arrayBuffer);
@@ -108,6 +109,7 @@ var Profile = CreateReactClass({
           <DisplayPicture
             profileImage={this.props.profileImage} />
         </div>
+        <div className="profile-name">{this.props.profileName}</div>
         <div>
           <SocialLink
             socialType="fab fa-github"
@@ -131,7 +133,10 @@ var Profile = CreateReactClass({
   }
 });
 
+/* Render the root element */
 ReactDOM.render(
-  <Profile profileImage="https://s3-us-west-2.amazonaws.com/toms-web/avatar.JPG"/>,
+  <Profile 
+    profileImage="https://s3-us-west-2.amazonaws.com/toms-web/avatar.JPG"
+    profileName="Tom Hadlaw"/>,
   document.getElementById("container")
 );
