@@ -4,3 +4,6 @@ build:
 
 run:
 	yarn start:dev
+
+release:
+	./release.sh
